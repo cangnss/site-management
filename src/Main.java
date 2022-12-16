@@ -44,7 +44,7 @@ public class Main {
 				System.out.println("id: " + id + " firstname: " + firstname + " lastname: " + lastname + " age: " + age);
 			}
 			
-			
+			*/
 			String sql = "CREATE TABLE Resident " +
 					"(id INTEGER NOT NULL, " +
 					"firstName VARCHAR(50) NOT NULL, " +
@@ -52,10 +52,14 @@ public class Main {
 					"birthday DATE NOT NULL, " +
 					"age AS (YEAR(CURRENT_TIMESTAMP)-YEAR(birthday)), " +
 					"fullName AS (CONCAT(firstName, ' ', lastName)) PERSISTED, " +
+					"apartmentId INTEGER NOT NULL, " +
 					"PRIMARY KEY ( id ))";
-		stmt.executeUpdate(sql);*/
+			stmt.executeUpdate(sql);
 			
-			String insertResident = "INSERT INTO Resident " + "VALUES(1, 'Dilek', 'Yalcin','1999-04-02')";
+			String deleteResident = "DELETE FROM Resident WHERE id = 1";
+			stmt.execute(deleteResident);
+			
+			String insertResident = "INSERT INTO Resident " + "VALUES(1, 'Dilek', 'Yalcin','1999-04-02',1)";
 			stmt.executeUpdate(insertResident);
 			System.out.println("executed");
 			
