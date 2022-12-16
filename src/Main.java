@@ -1,5 +1,6 @@
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.Statement;
 
 public class Main {
@@ -18,16 +19,32 @@ public class Main {
 			// ...
 			System.out.println("Do here some database operations...");
 			Statement stmt = con.createStatement();
+			/* Create Table 
 			String sql = "CREATE TABLE CG " +
 						"(id INTEGER NOT NULL, " +
 						"firstname VARCHAR(50) NOT NULL, " +
 						"lastname VARCHAR(50) NOT NULL, " +
 						"age INTEGER NOT NULL, " +
 						"PRIMARY KEY ( id ))";
-			//stmt.executeUpdate(sql);
+			stmt.executeUpdate(sql);
+			
 			String insert = "INSERT INTO CG " + "VALUES (201,'Ali Can', 'Gunes',25)";
 			stmt.executeUpdate(insert);
 			System.out.println("executed");
+			*/
+			
+			ResultSet rs;
+			String select = "SELECT * FROM CG";
+			rs = stmt.executeQuery(select);
+			while (rs.next()) {
+				String id = rs.getString("id");
+				String firstname = rs.getString("firstname");
+				String lastname = rs.getString("lastname");
+				String age = rs.getString("age");
+				System.out.println("id: " + id + " firstname: " + firstname + " lastname: " + lastname + " age: " + age);
+
+				
+			}
 			
 			
 			
