@@ -31,7 +31,7 @@ public class Main {
 			String insert = "INSERT INTO CG " + "VALUES (201,'Ali Can', 'Gunes',25)";
 			stmt.executeUpdate(insert);
 			System.out.println("executed");
-			*/
+			
 			
 			ResultSet rs;
 			String select = "SELECT * FROM CG";
@@ -42,10 +42,22 @@ public class Main {
 				String lastname = rs.getString("lastname");
 				String age = rs.getString("age");
 				System.out.println("id: " + id + " firstname: " + firstname + " lastname: " + lastname + " age: " + age);
-
-				
 			}
 			
+			
+			String sql = "CREATE TABLE Resident " +
+					"(id INTEGER NOT NULL, " +
+					"firstName VARCHAR(50) NOT NULL, " +
+					"lastName VARCHAR(50) NOT NULL, " +
+					"birthday DATE NOT NULL, " +
+					"age AS (YEAR(CURRENT_TIMESTAMP)-YEAR(birthday)), " +
+					"fullName AS (CONCAT(firstName, ' ', lastName)) PERSISTED, " +
+					"PRIMARY KEY ( id ))";
+		stmt.executeUpdate(sql);*/
+			
+			String insertResident = "INSERT INTO Resident " + "VALUES(1, 'Dilek', 'Yalcin','1999-04-02')";
+			stmt.executeUpdate(insertResident);
+			System.out.println("executed");
 			
 			
 		} catch (Exception e) {
