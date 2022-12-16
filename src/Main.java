@@ -1,20 +1,35 @@
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.Statement;
 
 public class Main {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		Connection con = null;
-		String conUrl = "jdbc:sqlserver://localhost:50674; databaseName=AdventureWorks2019; integratedSecurity=true;"; 
+		String conUrl = "jdbc:sqlserver://localhost:50674; databaseName=DbTestProject; integratedSecurity=true;"; 
 
 		try {
 			Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
 			con = DriverManager.getConnection(conUrl);
 			System.out.println("Connected...");
 			System.out.println();
+			
 			// ...
 			System.out.println("Do here some database operations...");
+			Statement stmt = con.createStatement();
+			String sql = "CREATE TABLE CG " +
+						"(id INTEGER NOT NULL, " +
+						"firstname VARCHAR(50) NOT NULL, " +
+						"lastname VARCHAR(50) NOT NULL, " +
+						"age INTEGER NOT NULL, " +
+						"PRIMARY KEY ( id ))";
+			//stmt.executeUpdate(sql);
+			String insert = "INSERT INTO CG " + "VALUES (201,'Ali Can', 'Gunes',25)";
+			stmt.executeUpdate(insert);
+			System.out.println("executed");
+			
+			
 			
 		} catch (Exception e) {
 			System.out.println("Failed...");
