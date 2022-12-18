@@ -8,7 +8,7 @@ public class Main {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		Connection con = null;
-		String conUrl = "jdbc:sqlserver://localhost:50674; databaseName=DbTestProject; integratedSecurity=true;"; 
+		String conUrl = "jdbc:sqlserver://localhost:50674; databaseName=Project; integratedSecurity=true;"; 
 
 		try {
 			Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
@@ -44,7 +44,7 @@ public class Main {
 				System.out.println("id: " + id + " firstname: " + firstname + " lastname: " + lastname + " age: " + age);
 			}
 			
-			*/
+			
 			String sql = "CREATE TABLE Resident " +
 					"(id INTEGER NOT NULL, " +
 					"firstName VARCHAR(50) NOT NULL, " +
@@ -62,7 +62,10 @@ public class Main {
 			String insertResident = "INSERT INTO Resident " + "VALUES(1, 'Dilek', 'Yalcin','1999-04-02',1)";
 			stmt.executeUpdate(insertResident);
 			System.out.println("executed");
-			
+			*/
+			String insertResident = "INSERT INTO Item " + "VALUES('Test', '225.50', '2')";
+			stmt.executeUpdate(insertResident);
+			System.out.println("executed");
 			
 		} catch (Exception e) {
 			System.out.println("Failed...");
