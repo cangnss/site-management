@@ -7,7 +7,6 @@ import java.util.Scanner;
 import controller.AccountController;
 import controller.ApartmentController;
 import controller.ItemController;
-import controller.LoadController;
 import controller.ResidentController;
 import controller.RolesController;
 
@@ -15,12 +14,6 @@ public class Main {
 
 	public static void main(String[] args) {
 		try {
-//			boolean flag = true;
-//			if(flag == true) {
-//				LoadController lc = new LoadController();
-//				lc.LoadValues();
-//				flag = false;
-//			}
 			Connection con = null;
 			String conUrl = "jdbc:sqlserver://localhost:50674; databaseName=Project; integratedSecurity=true;";
 			

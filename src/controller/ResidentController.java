@@ -1,5 +1,4 @@
 package controller;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -73,30 +72,15 @@ public class ResidentController {
 	}
 
 	public static void Insert(Connection con) {
-		Scanner scan = new Scanner(System.in);
-		Scanner scan2 = new Scanner(System.in);
-		System.out.println("Enter resident id: ");
-		int id = scan.nextInt();
-		System.out.println("Enter first name: ");
-		String firstName = scan2.next();
-		System.out.println("Enter lastname name: ");
-		String lastName = scan2.next();
-		System.out.println("Enter birthday: ");
-		String birthday = scan2.next();
-		System.out.println("Enter gender: ");
-		String gender = scan2.next();
-		System.out.println("Enter apartment id: ");
-		int apartmentId = scan.nextInt();
 
 		try {
-			String insert = "set identity_insert Resident on INSERT INTO Resident(id,firstName,lastName,birthday,gender,apartmentId) VALUES(?,?,?,?,?,?)";
+			String insert = "INSERT INTO Resident(firstName,lastName,birthday,gender,apartmentId) VALUES(?,?,?,?,?)";
 			PreparedStatement prepStmt = con.prepareStatement(insert);
-			prepStmt.setInt(1, id);
-			prepStmt.setString(2, firstName);
-			prepStmt.setString(3, lastName);
-			prepStmt.setString(4, birthday);
-			prepStmt.setString(5, gender);
-			prepStmt.setInt(6, apartmentId);
+			prepStmt.setString(1, "Ceyda");
+			prepStmt.setString(2, "Sağlam");
+			prepStmt.setString(3, "08-23-1985");
+			prepStmt.setString(4, "F");
+			prepStmt.setInt(5, 4);
 			prepStmt.executeUpdate();
 			prepStmt.close();
 
@@ -106,5 +90,4 @@ public class ResidentController {
 		}
 
 	}
-
 }

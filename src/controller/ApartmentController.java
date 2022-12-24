@@ -1,6 +1,6 @@
 package controller;
-
 import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.Scanner;
@@ -34,7 +34,8 @@ public class ApartmentController {
 			prepStmt.executeUpdate();
 			prepStmt.close();
 			
-			System.out.println("Deleted!");
+			System.out.println("Deleted Apartment!");
+			List(con);
 		}catch(Exception e) {
 			System.out.println(e);
 		}
@@ -47,8 +48,6 @@ public class ApartmentController {
 			List(con);
 			System.out.println("Enter apartment id for update: ");
 			int id=scan.nextInt();
-			//System.out.println("Enter new apartment id : ");
-			//int newId=scan.nextInt();
 			System.out.println("Enter new apartment name: ");
 			String apartmantName=scan2.next();
 			
@@ -59,27 +58,21 @@ public class ApartmentController {
 			prepStmt.executeUpdate();
 			prepStmt.close();
 			
-			System.out.println("Updated!");
+			System.out.println("Updated Apartment!");
+			List(con);
 		}catch(Exception e) {
 			System.out.println(e);
 		}
 		
 	}
 	public static void Insert(Connection con) {
-		Scanner scan=new Scanner(System.in);
-		System.out.println("Enter apartment id: ");
-		int id=scan.nextInt();
-		System.out.println("Enter apartmnet name: ");
-		String apartmantName=scan.next();
 		try {
-			String insert="set identity_insert Apartment on INSERT INTO Apartment(id,apartmantName) VALUES(?,?)";
+			String insert="INSERT INTO Apartment(apartmantName) VALUES(?)";
 			PreparedStatement prepStmt=con.prepareStatement(insert);
-			prepStmt.setInt(1,id);
-			prepStmt.setString(2, apartmantName);
+			prepStmt.setString(1, "Deniz Apartmani");
 			prepStmt.executeUpdate();
 			prepStmt.close();
-			
-			System.out.println("Inserted!");
+			System.out.println("Inserted Apartment!");
 		}catch(Exception e) {
 			System.out.println(e);
 		}

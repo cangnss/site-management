@@ -4,15 +4,15 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.Scanner;
 
-public class ItemController {
+public class IncomeExpenseTypeController {
 	public static void List(Connection con) {
 		try {
-			String query = "SELECT * FROM Item";
+			String query = "SELECT * FROM Income_Expense_Type";
 			PreparedStatement prepStmt = con.prepareStatement(query);
 			ResultSet rs = prepStmt.executeQuery();
 			while (rs.next()) {
-				System.out.println("id: " + rs.getInt(1) + " Item Name: " + rs.getString(2) + " Price: "
-						+ rs.getDouble(3) + " apartmentId: " + rs.getInt(4));
+				System.out.println("id: " + rs.getInt(1) + " Type: " + rs.getString(2) + " Item id:: " + rs.getInt(3)
+						+ " expense id: " + rs.getInt(4));
 			}
 			prepStmt.close();
 		} catch (Exception e) {
@@ -24,16 +24,16 @@ public class ItemController {
 		Scanner scan = new Scanner(System.in);
 		try {
 			List(con);
-			System.out.println("Enter Item id for delete: ");
+			System.out.println("Enter income expense type id for delete: ");
 			int id = scan.nextInt();
 
-			String query = ("DELETE Item WHERE id=?");
+			String query = ("DELETE Income_Expense_Type WHERE id=?");
 			PreparedStatement prepStmt = con.prepareStatement(query);
 			prepStmt.setInt(1, id);
 			prepStmt.executeUpdate();
 			prepStmt.close();
 
-			System.out.println("Deleted Item!");
+			System.out.println("Deleted!");
 		} catch (Exception e) {
 			System.out.println(e);
 		}
@@ -45,27 +45,25 @@ public class ItemController {
 		Scanner scan2 = new Scanner(System.in);
 		try {
 			List(con);
-			System.out.println("Enter item id for update: ");
+			System.out.println("Enter income expense type id for update: ");
 			int id = scan.nextInt();
-			System.out.println("Enter new item name: ");
-			String itemName = scan2.next();
-			System.out.println("Enter price: ");
-			double price = scan.nextDouble();
-			System.out.println("Enter apartment id: ");
-			int apartmentId = scan.nextInt();
+			System.out.println("Enter type : ");
+			String type = scan2.next();
+			System.out.println("Enter item id : ");
+			int itemId = scan.nextInt();
+			System.out.println("Enter expenseid : ");
+			int expenseId = scan.nextInt();
 
-			String query = ("UPDATE Item SET itemName=?, price=?, apartmentId=? WHERE id=?");
+			String query = ("UPDATE Income_Expense_Type SET type=?, itemId=?, expenseId=? WHERE id=?");
 			PreparedStatement prepStmt = con.prepareStatement(query);
-			prepStmt.setString(1, itemName);
-			prepStmt.setDouble(2, price);
-			prepStmt.setInt(3, apartmentId);
+			prepStmt.setString(1, type);
+			prepStmt.setInt(2, itemId);
+			prepStmt.setInt(3, expenseId);
 			prepStmt.setInt(4, id);
-
 			prepStmt.executeUpdate();
 			prepStmt.close();
 
-			System.out.println("Updated Item!");
-			List(con);
+			System.out.println("Updated IncomeExpenseType!");
 		} catch (Exception e) {
 			System.out.println(e);
 		}
@@ -74,15 +72,15 @@ public class ItemController {
 
 	public static void Insert(Connection con) {
 		try {
-			String insert = "INSERT INTO Item(itemName,price,apartmentId) VALUES(?,?,?)";
+			String insert = "INSERT INTO Income_Expense_Type(type, itemId, expenseId) VALUES(?,?,?)";
 			PreparedStatement prepStmt = con.prepareStatement(insert);
-			prepStmt.setString(1, "Cop Torbasi");
-			prepStmt.setDouble(2, 22.5);
-			prepStmt.setInt(3, 7);
+			prepStmt.setInt(1, 0);
+			prepStmt.setInt(2, 19);
+			prepStmt.setInt(3, 2);
 			prepStmt.executeUpdate();
 			prepStmt.close();
-			System.out.println("Inserted Item!");
-			List(con);
+
+			System.out.println("Inserted IncomeExpenseType!");
 		} catch (Exception e) {
 			System.out.println(e);
 		}

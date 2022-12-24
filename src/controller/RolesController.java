@@ -1,5 +1,4 @@
 package controller;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -72,23 +71,13 @@ public class RolesController {
 	}
 
 	public static void Insert(Connection con) {
-		Scanner scan = new Scanner(System.in);
-		Scanner scan2 = new Scanner(System.in);
-		System.out.println("Enter role id: ");
-		int id = scan.nextInt();
-		System.out.println("Enter role name: ");
-		String role = scan2.next();
-		System.out.println("Enter resident id: ");
-		int residentId = scan.nextInt();
-		System.out.println("Enter apartment id: ");
-		int apartmentId = scan.nextInt();
+
 		try {
-			String insert = "set identity_insert Roles on INSERT INTO Roles(id,role,residentId,apartmentId) VALUES(?,?,?,?)";
+			String insert = "INSERT INTO Roles(role,residentId,apartmentId) VALUES(?,?,?)";
 			PreparedStatement prepStmt = con.prepareStatement(insert);
-			prepStmt.setInt(1, id);
-			prepStmt.setString(2, role);
-			prepStmt.setInt(3, residentId);
-			prepStmt.setInt(4, apartmentId);
+			prepStmt.setString(1, "Manager");
+			prepStmt.setInt(2, 27);
+			prepStmt.setInt(3, 7);
 			prepStmt.executeUpdate();
 			prepStmt.close();
 
