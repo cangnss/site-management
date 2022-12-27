@@ -1,81 +1,47 @@
 package controller;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.util.Scanner;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import model.Apartment;
+import service.ApartmentService;
 
 public class ApartmentController {
+	private final ApartmentService apartmentService;
 	
-	public static void List(Connection con) {
-		try {
-			String query = "SELECT * FROM Apartment";
-			PreparedStatement prepStmt=con.prepareStatement(query);
-			ResultSet rs = prepStmt.executeQuery();
-			while (rs.next()) {
-			    System.out.println("id: " + rs.getInt(1) + " Apartment Name: " + rs.getString(2) );
-			}
-			prepStmt.close();
-		}catch(Exception e) {
-			System.out.println(e);
-		}
+	public ApartmentController(ApartmentService apartmentService) {
+		this.apartmentService = apartmentService;
 	}
 	
-	public static void Delete(Connection con) {
-		Scanner scan=new Scanner(System.in);
-		try {
-			List(con);
-			System.out.println("Enter apartment id for delete: ");
-			int id=scan.nextInt();
-			
-			String query=("DELETE Apartment WHERE id=?");
-			PreparedStatement prepStmt=con.prepareStatement(query);
-			prepStmt.setInt(1, id);
-			prepStmt.executeUpdate();
-			prepStmt.close();
-			
-			System.out.println("Deleted Apartment!");
-			List(con);
-		}catch(Exception e) {
-			System.out.println(e);
-		}
-		
+	public List<Apartment> allApartments(){
+		return apartmentService.allApartments();
 	}
-	public static void Update(Connection con) {
-		Scanner scan=new Scanner(System.in);
-		Scanner scan2=new Scanner(System.in);
-		try {
-			List(con);
-			System.out.println("Enter apartment id for update: ");
-			int id=scan.nextInt();
-			System.out.println("Enter new apartment name: ");
-			String apartmantName=scan2.next();
-			
-			String query=("UPDATE Apartment SET apartmantName=? WHERE id=?");
-			PreparedStatement prepStmt=con.prepareStatement(query);
-			prepStmt.setString(1, apartmantName);
-			prepStmt.setInt(2, id);
-			prepStmt.executeUpdate();
-			prepStmt.close();
-			
-			System.out.println("Updated Apartment!");
-			List(con);
-		}catch(Exception e) {
-			System.out.println(e);
-		}
-		
+	
+	public void addApartment(Apartment apartment) {
+		apartmentService.addApartment(apartment);
 	}
-	public static void Insert(Connection con) {
-		try {
-			String insert="INSERT INTO Apartment(apartmantName) VALUES(?)";
-			PreparedStatement prepStmt=con.prepareStatement(insert);
-			prepStmt.setString(1, "Deniz Apartmani");
-			prepStmt.executeUpdate();
-			prepStmt.close();
-			System.out.println("Inserted Apartment!");
-		}catch(Exception e) {
-			System.out.println(e);
-		}
-		
+	
+	public void updateApartment(int id, Apartment apartment) {
+		apartmentService.updateApartment(id, apartment);
+	}
+	
+	public void deleteApartment(int id) {
+		apartmentService.deleteApartment(id);
+	}
+	
+	public ArrayList<String> getApartment(int id){
+		return apartmentService.getApartment(id);
+	}
+	
+	public ArrayList<String> getResidentsInApartment(){
+		return apartmentService.getResidentsInApartment();
+	}
+	
+	public ArrayList<String> getMonthlyPaymentByApartment(){
+		return apartmentService.getMonthlyPaymentByApartment();
+	}
+	
+	public int getSumAllMonthlyPayments(){
+		return apartmentService.getSumAllMonthlyPayments();
 	}
 }
