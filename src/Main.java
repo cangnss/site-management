@@ -7,9 +7,12 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 import controller.ApartmentController;
+import controller.ExpenseController;
 import model.Apartment;
 import repository.ApartmentRepository;
+import repository.ExpenseRepository;
 import service.ApartmentService;
+import service.ExpenseService;
 import utils.Menu;
 
 public class Main {
@@ -114,6 +117,27 @@ public class Main {
 							throw new IllegalArgumentException("Unexpected value: " + apt1);
 						}
 					} while (apt1 != 0);
+				}
+				case 5:{
+					ExpenseRepository expenseRepository = new ExpenseRepository();
+					ExpenseService expenseService = new ExpenseService(expenseRepository);
+					ExpenseController exps = new ExpenseController(expenseService);
+					
+					int exp1;
+					Scanner exp1s = new Scanner(System.in);
+					do {
+						Menu.createSubMenuExpense();
+						System.out.println("Choose Expense Process\n");
+						exp1 = exp1s.nextInt();
+						switch (exp1) {
+						case 1: {
+							exps.allExpenses();
+							break;
+						}
+						default:
+							throw new IllegalArgumentException("Unexpected value: " + exp1);
+						}
+					} while (exp1 != 0);
 				}
 				default:
 					throw new IllegalArgumentException("Unexpected value: " + choose);
