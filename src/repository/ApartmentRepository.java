@@ -102,7 +102,7 @@ public class ApartmentRepository implements IApartmentRepository{
 	public ArrayList<String> getResidentInApartment() {
 		try {
 			ArrayList<String> residents = new ArrayList<>();
-			String query = "select apartmantName, fullName from Apartment inner join Resident on Resident.apartmentId = Apartment.id";
+			String query = "select name, fullName from Apartment inner join Person on Person.apartment_id = Apartment.id";
 			PreparedStatement prepStmt=con.prepareStatement(query);
 			ResultSet result = prepStmt.executeQuery(); 
 			while(result.next()) {
