@@ -8,12 +8,24 @@ import java.util.Scanner;
 
 import controller.ApartmentController;
 import controller.ExpenseController;
+import controller.PersonController;
+import controller.RoleController;
+import controller.SubscriptionController;
 import model.Apartment;
 import model.Expense;
+import model.Person;
+import model.Role;
+import model.Subscription;
 import repository.ApartmentRepository;
 import repository.ExpenseRepository;
+import repository.PersonRepository;
+import repository.RoleRepository;
+import repository.SubscriptionRepository;
 import service.ApartmentService;
 import service.ExpenseService;
+import service.PersonService;
+import service.RoleService;
+import service.SubscriptionService;
 import utils.Menu;
 
 public class Main {
@@ -119,6 +131,264 @@ public class Main {
 						}
 					} while (apt1 != 0);
 				}
+				case 2:{
+					PersonRepository personRepository = new PersonRepository();
+					PersonService personService = new PersonService(personRepository);
+					PersonController pc = new PersonController(personService);
+					
+					int person1;
+					Scanner person1s = new Scanner(System.in);
+					do {
+						Menu.createSubMenuPerson();
+						System.out.println("Choose Person Process\n");
+						person1 = person1s.nextInt();
+						switch (person1) {
+						case 1: {
+							pc.allPerson();
+							break;
+						}
+						case 2:{
+							Scanner txtScan = new Scanner(System.in);
+							System.out.println("Please enter first name:");
+							String firstName = txtScan.nextLine();
+							System.out.println("Please enter last name:");
+							String lastName = txtScan.nextLine();
+							System.out.println("Please enter birthday:");
+							String birthday = txtScan.nextLine();
+							//SimpleDateFormat formatter = new SimpleDateFormat();
+							//Date birthday = (Date) formatter.parse(birthday2);
+							System.out.println("Please enter gender:");
+							String gender = txtScan.nextLine();
+							System.out.println("Please enter gmail:");
+							String gmail = txtScan.nextLine();
+							System.out.println("Please enter apartment ID:");
+							int apartment_id = txtScan.nextInt();
+							Person person = new Person(firstName, lastName, birthday,gender, gmail,apartment_id); 
+							pc.addPerson(person);
+							break;
+						}
+						case 3:{
+							pc.allPerson();
+							int id, apartment_id;
+							String firstName, lastName, gmail;
+							Scanner idScan = new Scanner(System.in);
+							Scanner txtScan = new Scanner(System.in);
+							System.out.println("Please enter a id:");
+							id = idScan.nextInt();
+							System.out.println("Please enter a new first name:");
+							firstName = txtScan.nextLine();
+							System.out.println("Please enter a new last name:");
+							lastName = txtScan.nextLine();
+							System.out.println("Please enter a new gmail:");
+							gmail = txtScan.nextLine();
+							System.out.println("Please enter a new apartment ID:");
+							apartment_id = idScan.nextInt();
+							Person person = new Person(firstName, lastName, gmail, apartment_id); 
+							pc.updatePerson(id, person);
+							pc.allPerson();
+							break;
+						}
+						case 4:{
+							pc.allPerson();
+							int id;
+							Scanner idScan = new Scanner(System.in);
+							System.out.println("Please enter a id:");
+							id = idScan.nextInt();
+							pc.deletePerson(id);
+							pc.allPerson();
+							break;
+						}
+						case 5:{
+							int id;
+							Scanner idScan = new Scanner(System.in);
+							System.out.println("Please enter a id:");
+							id = idScan.nextInt();
+							ArrayList<String> person = pc.getPerson(id);
+							if (person!= null) {
+								for (String value : person) {
+									System.out.println("Full Name: " + value );
+								}								
+							}else {
+								System.out.println("Person is not found!");
+							}
+							break;
+						}
+						default:
+							throw new IllegalArgumentException("Unexpected value: " + person1);
+						}
+					} while (person1 != 0);
+				}
+				case 3:{
+					RoleRepository roleRepository = new RoleRepository();
+					RoleService roleService = new RoleService(roleRepository);
+					RoleController rc = new RoleController(roleService);
+					
+					int role1;
+					Scanner role1s = new Scanner(System.in);
+					do {
+						Menu.createSubMenuRole();
+						System.out.println("Choose Role Process\n");
+						role1 = role1s.nextInt();
+						switch (role1) {
+						case 1: {
+							rc.allRole();
+							break;
+						}
+						case 2:{
+							Scanner txtScan = new Scanner(System.in);
+							System.out.println("Please enter type:");
+							String type = txtScan.nextLine();
+							System.out.println("Please enter person ID:");
+							int person_id = txtScan.nextInt();
+							System.out.println("Please enter apartment ID:");
+							int apartment_id = txtScan.nextInt();
+							Role role = new Role(type, person_id, apartment_id); 
+							rc.addRole(role);
+							break;
+						}
+						case 3:{
+							rc.allRole();
+							int id,person_id, apartment_id;
+							String type;
+							Scanner idScan = new Scanner(System.in);
+							Scanner txtScan = new Scanner(System.in);
+							System.out.println("Please enter a id:");
+							id = idScan.nextInt();
+							System.out.println("Please enter a new type:");
+							type = txtScan.nextLine();
+							System.out.println("Please enter a new person ID:");
+							person_id = txtScan.nextInt();
+							System.out.println("Please enter a new apartment ID:");
+							apartment_id = idScan.nextInt();
+							Role role = new Role(type, person_id, apartment_id); 
+							rc.updateRole(id, role);
+							rc.allRole();
+							break;
+						}
+						case 4:{
+							rc.allRole();
+							int id;
+							Scanner idScan = new Scanner(System.in);
+							System.out.println("Please enter a id:");
+							id = idScan.nextInt();
+							rc.deleteRole(id);
+							rc.allRole();
+							break;
+						}
+						case 5:{
+							ArrayList<String> managers = rc.getManagerInApartment();
+							for (int i=0; i<managers.size(); i++) {
+								System.out.println(managers.get(i));
+							}
+							break;
+						}
+						default:
+							throw new IllegalArgumentException("Unexpected value: " + role1);
+						}
+					} while (role1 != 0);
+				}
+				case 4:{
+					SubscriptionRepository subscriptionRepository = new SubscriptionRepository();
+					SubscriptionService subscriptionService = new SubscriptionService(subscriptionRepository);
+					SubscriptionController subs = new SubscriptionController(subscriptionService);
+					
+					ApartmentRepository apartmentRepository = new ApartmentRepository();
+					ApartmentService apartmentService = new ApartmentService(apartmentRepository);
+					ApartmentController acc = new ApartmentController(apartmentService);
+					
+					int subs1;
+					Scanner sub1s = new Scanner(System.in);
+					do {
+						Menu.createSubMenuExpense();
+						System.out.println("Choose Expense Process\n");
+						subs1 = sub1s.nextInt();
+						switch (subs1) {
+						case 1: {
+							subs.allSubscriptions();
+							break;
+						}
+						case 2:{
+							acc.allApartments();
+							
+							Scanner sub21s = new Scanner(System.in);
+							Scanner sub22s= new Scanner(System.in);
+							
+							int apartment_id;
+							String service;
+							String period;
+							double cost;
+							
+							System.out.println("Which apartment would you like to add subscription to? Please enter apartment id!");
+							apartment_id = sub21s.nextInt();
+							
+							System.out.println("Can you enter a service?");
+							service = sub22s.nextLine();
+							System.out.println("Can you enter a period?");
+							period = sub22s.nextLine();
+							
+							System.out.println("Can you enter a cost?");
+							cost = sub21s.nextDouble();
+							
+							System.out.println("test: apartment_id: " + apartment_id + " service: " + service + " period: " + period + " cost: " + cost + "\n");
+							Subscription subscription = new Subscription(apartment_id, service, period, cost);
+							subs.addSubscription (subscription );
+							break;
+							
+						}
+						case 3:{
+							subs.allSubscriptions();
+							int id;
+							String service;
+							String period;
+							double cost;
+							Scanner sub31s = new Scanner(System.in);
+							Scanner sub32s = new Scanner(System.in);
+							
+							System.out.println("Please enter a id:");
+							id = sub31s.nextInt();
+							
+							System.out.println("Please enter a service:");
+							service = sub32s.nextLine();
+							
+							System.out.println("Please enter a period:");
+							period = sub32s.nextLine();
+					
+							System.out.println("Please enter a new cost:");
+							cost = sub31s.nextDouble();
+							
+							Subscription subscription = new Subscription(id,service,period, cost); 
+							subs.updateSubscription(id, subscription);
+							subs.allSubscriptions();
+							break;
+							
+						}
+						case 4:{
+							subs.allSubscriptions();
+							int id;
+							Scanner idScan = new Scanner(System.in);
+							System.out.println("Please enter a id:");
+							id = idScan.nextInt();
+							subs.deleteSubscription(id);
+							subs.allSubscriptions();
+							break;
+						}
+						case 5:{
+							   int id;
+	                            acc.allApartments();
+	                            Scanner idScan = new Scanner(System.in);
+	                            System.out.println("Please enter a apartment id");
+	                            id = idScan.nextInt();
+	                            ArrayList<String> subscriptions = subs.getSubscriptionByApartmentId(id);
+	                            for (String subscription : subscriptions) {
+	                                System.out.println(subscription);
+	                            }
+	                            break;
+						}
+						default:
+							throw new IllegalArgumentException("Unexpected value: " + subs1);
+						}
+					} while (subs1 != 0);
+				}
 				case 5:{
 					ExpenseRepository expenseRepository = new ExpenseRepository();
 					ExpenseService expenseService = new ExpenseService(expenseRepository);
@@ -195,6 +465,18 @@ public class Main {
 							id = idScan.nextInt();
 							exps.deleteExpense(id);
 							exps.allExpenses();
+							break;
+						}
+						case 5:{
+							int id;
+							acc.allApartments();
+							Scanner idScan = new Scanner(System.in);
+							System.out.println("Please enter a apartment id");
+							id = idScan.nextInt();
+							ArrayList<String> expenses = exps.getExpenseByApartmentId(id);
+							for (String expense : expenses) {
+								System.out.println(expense);
+							}
 							break;
 						}
 						default:

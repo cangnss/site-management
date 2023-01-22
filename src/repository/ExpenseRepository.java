@@ -30,20 +30,21 @@ public class ExpenseRepository implements IExpenseRepository{
 	}
 
 	@Override
-	public ArrayList<String> getExpense(int id) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public ArrayList<String> getExpenseByApartment() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public ArrayList<Expense> getExpenseByApartmentId(int id) {
-		// TODO Auto-generated method stub
+	public ArrayList<String> getExpenseByApartmentId(int id) {
+		try {
+			ArrayList<String> expenses = new ArrayList<>();
+			String query = "select name, description, cost from Expense inner join Apartment on Expense.apartment_id = Apartment.id where apartment_id = " + id;
+			PreparedStatement prepStmt=con.prepareStatement(query);
+			ResultSet rs = prepStmt.executeQuery();
+			while (rs.next()) {
+				expenses.add(rs.getString("name") + " " + rs.getString("description") + " " + Double.toString(rs.getDouble("cost")));
+			}
+			prepStmt.close();
+			return expenses;
+		} catch (Exception e) {
+			// TODO: handle exception
+			System.out.println("Get expenses error");
+		}
 		return null;
 	}
 

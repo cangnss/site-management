@@ -1,5 +1,6 @@
 package service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import model.Expense;
@@ -15,6 +16,10 @@ public class ExpenseService {
 	
 	public List<Expense> allExpenses(){
 		return expenseRepository.allExpenses();
+	}
+	
+	public ArrayList<String> getExpenseByApartmentId(int id){
+		return expenseRepository.getExpenseByApartmentId(id);
 	}
 	
 	public void addExpense(Expense expense) {

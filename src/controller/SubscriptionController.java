@@ -1,5 +1,6 @@
 package controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import model.Subscription;
@@ -14,6 +15,9 @@ private final SubscriptionService subscriptionService;
 	
 	public List<Subscription> allSubscriptions(){
 		return subscriptionService.allSubscriptions();
+	}
+	public ArrayList<String> getSubscriptionByApartmentId(int id) {
+		return subscriptionService.getSubscriptionByApartmentId(id);
 	}
 	
 	public void addSubscription(Subscription subscription) {
