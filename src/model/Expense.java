@@ -12,6 +12,11 @@ public class Expense {
 		this.cost = cost;
 	}
 	
+	public Expense(String description, double cost) {
+		this.description = description;
+		this.cost = cost;
+	}
+	
 	public int getApartment_id() {
 		return apartment_id;
 	}

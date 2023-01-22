@@ -20,4 +20,10 @@ public class ExpenseService {
 	public void addExpense(Expense expense) {
 		expenseRepository.addExpense(expense);
 	}
+	public void updateExpense(int id,Expense expense) {
+		expenseRepository.updateExpense(id, expense);
+	}
+	public void deleteExpense(int id) {
+		expenseRepository.deleteExpense(id);
+	}
 }

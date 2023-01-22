@@ -164,6 +164,39 @@ public class Main {
 							break;
 							
 						}
+						case 3:{
+							exps.allExpenses();
+							int id;
+							String description;
+							double cost;
+							Scanner exp31s = new Scanner(System.in);
+							Scanner exp32s = new Scanner(System.in);
+							
+							System.out.println("Please enter a id:");
+							id = exp31s.nextInt();
+							
+							System.out.println("Please enter a description:");
+							description = exp32s.nextLine();
+							
+							System.out.println("Please enter a new cost:");
+							cost = exp31s.nextDouble();
+							
+							Expense expense = new Expense(description, cost); 
+							exps.updateExpense(id, expense);
+							exps.allExpenses();
+							break;
+							
+						}
+						case 4:{
+							exps.allExpenses();
+							int id;
+							Scanner idScan = new Scanner(System.in);
+							System.out.println("Please enter a id:");
+							id = idScan.nextInt();
+							exps.deleteExpense(id);
+							exps.allExpenses();
+							break;
+						}
 						default:
 							throw new IllegalArgumentException("Unexpected value: " + exp1);
 						}
