@@ -9,6 +9,7 @@ import java.util.Scanner;
 import controller.ApartmentController;
 import controller.ExpenseController;
 import model.Apartment;
+import model.Expense;
 import repository.ApartmentRepository;
 import repository.ExpenseRepository;
 import service.ApartmentService;
@@ -123,6 +124,10 @@ public class Main {
 					ExpenseService expenseService = new ExpenseService(expenseRepository);
 					ExpenseController exps = new ExpenseController(expenseService);
 					
+					ApartmentRepository apartmentRepository = new ApartmentRepository();
+					ApartmentService apartmentService = new ApartmentService(apartmentRepository);
+					ApartmentController acc = new ApartmentController(apartmentService);
+					
 					int exp1;
 					Scanner exp1s = new Scanner(System.in);
 					do {
@@ -133,6 +138,31 @@ public class Main {
 						case 1: {
 							exps.allExpenses();
 							break;
+						}
+						case 2:{
+							acc.allApartments();
+							
+							Scanner exp2s = new Scanner(System.in);
+							Scanner exp3s = new Scanner(System.in);
+							
+							int apartment_id;
+							String description;
+							double cost;
+							
+							System.out.println("Which apartment would you like to add expense to? Please enter apartment id!");
+							apartment_id = exp2s.nextInt();
+							
+							System.out.println("Can you enter a description?");
+							description = exp3s.nextLine();
+							
+							System.out.println("Can you enter a cost?");
+							cost = exp2s.nextDouble();
+							
+							System.out.println("test: apartment_id: " + apartment_id + " description: " + description + " cost: " + cost + "\n");
+							Expense expense = new Expense(apartment_id, description, cost);
+							exps.addExpense(expense);
+							break;
+							
 						}
 						default:
 							throw new IllegalArgumentException("Unexpected value: " + exp1);

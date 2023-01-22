@@ -1,24 +1,17 @@
 package model;
 
 public class Expense {
-	private int id;
+	
 	private int apartment_id;
 	private String description;
 	private double cost;
 	
-	public Expense(int id, int apartment_id, String description, double cost) {
-		this.id = id;
+	public Expense(int apartment_id, String description, double cost) {
 		this.apartment_id = apartment_id;
 		this.description = description;
 		this.cost = cost;
 	}
 	
-	public int getId() {
-		return id;
-	}
-	public void setId(int id) {
-		this.id = id;
-	}
 	public int getApartment_id() {
 		return apartment_id;
 	}

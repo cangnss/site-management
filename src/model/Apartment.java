@@ -2,7 +2,6 @@ package model;
 
 public class Apartment {
 
-	private int id;
 	private String apartmantName;
 	
 	public Apartment(String apartmantName) {

@@ -49,7 +49,19 @@ public class ExpenseRepository implements IExpenseRepository{
 
 	@Override
 	public void addExpense(Expense expense) {
-		// TODO Auto-generated method stub
+		try {
+			String insert="INSERT INTO Expense(apartment_id, description, cost) VALUES(?, ?, ?)";
+			PreparedStatement prepStmt=con.prepareStatement(insert);
+			prepStmt.setInt(1, expense.getApartment_id());
+			prepStmt.setString(2, expense.getDescription());
+			prepStmt.setDouble(3, expense.getCost());
+			prepStmt.executeUpdate();
+			prepStmt.close();
+			System.out.println("Inserted New Expense!");
+		} catch (Exception e) {
+			// TODO: handle exception
+			System.out.println("error:" + e);
+		}
 		
 	}
 

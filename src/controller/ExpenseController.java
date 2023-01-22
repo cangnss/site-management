@@ -6,7 +6,7 @@ import model.Expense;
 import service.ExpenseService;
 
 public class ExpenseController {
-private final ExpenseService expenseService;
+	private final ExpenseService expenseService;
 	
 	public ExpenseController(ExpenseService expenseService) {
 		this.expenseService = expenseService;
@@ -14,5 +14,9 @@ private final ExpenseService expenseService;
 	
 	public List<Expense> allExpenses(){
 		return expenseService.allExpenses();
+	}
+	
+	public void addExpense(Expense expense) {
+		expenseService.addExpense(expense);
 	}
 }

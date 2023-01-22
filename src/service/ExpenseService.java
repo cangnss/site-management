@@ -7,7 +7,7 @@ import repository.ExpenseRepository;
 
 
 public class ExpenseService {
-private final ExpenseRepository expenseRepository;
+	private final ExpenseRepository expenseRepository;
 	
 	public ExpenseService(ExpenseRepository expenseRepository) {
 		this.expenseRepository = expenseRepository;
@@ -15,5 +15,9 @@ private final ExpenseRepository expenseRepository;
 	
 	public List<Expense> allExpenses(){
 		return expenseRepository.allExpenses();
+	}
+	
+	public void addExpense(Expense expense) {
+		expenseRepository.addExpense(expense);
 	}
 }
