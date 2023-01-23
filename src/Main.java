@@ -7,22 +7,30 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 import controller.ApartmentController;
+import controller.DecisionController;
 import controller.ExpenseController;
+import controller.MeetingController;
 import controller.PersonController;
 import controller.RoleController;
 import controller.SubscriptionController;
 import model.Apartment;
+import model.Decision;
 import model.Expense;
+import model.Meeting;
 import model.Person;
 import model.Role;
 import model.Subscription;
 import repository.ApartmentRepository;
+import repository.DecisionRepository;
 import repository.ExpenseRepository;
+import repository.MeetingRepository;
 import repository.PersonRepository;
 import repository.RoleRepository;
 import repository.SubscriptionRepository;
 import service.ApartmentService;
+import service.DecisionService;
 import service.ExpenseService;
+import service.MeetingService;
 import service.PersonService;
 import service.RoleService;
 import service.SubscriptionService;
@@ -483,6 +491,153 @@ public class Main {
 							throw new IllegalArgumentException("Unexpected value: " + exp1);
 						}
 					} while (exp1 != 0);
+				}
+				case 6:{
+
+					MeetingRepository meetingRepository = new MeetingRepository();
+					MeetingService meetingService = new MeetingService(meetingRepository);
+					MeetingController mc = new MeetingController(meetingService);
+					
+					int meeting1;
+					Scanner meeting1s = new Scanner(System.in);
+					do {
+						Menu.createSubMenuMeeting();
+						System.out.println("Choose Meeting Process\n");
+						meeting1 = meeting1s.nextInt();
+						switch (meeting1) {
+						case 1: {
+							mc.allMeetings();
+							break;
+						}
+						case 2:{
+							Scanner txtScan = new Scanner(System.in);
+							Scanner idScan = new Scanner(System.in);
+							System.out.println("Please enter apartment ID:");
+							int apartment_id = idScan.nextInt();
+							System.out.println("Please enter date:");
+							String date=txtScan.next();
+							Meeting meeting = new Meeting(apartment_id, date); 
+							mc.addMeeting(meeting);
+							break;
+						}
+						case 3:{
+							mc.allMeetings();
+							int id,apartment_id;
+							String date;
+							Scanner idScan = new Scanner(System.in);
+							Scanner txtScan = new Scanner(System.in);
+							System.out.println("Please enter a id:");
+							id = idScan.nextInt();
+							System.out.println("Please enter a new apartment ID:");
+							apartment_id = txtScan.nextInt();
+							System.out.println("Please enter a new date:");
+							date=txtScan.next();
+							
+							Meeting meeting = new Meeting(apartment_id, date); 
+							mc.updateMeeting(id, meeting);
+							mc.allMeetings();
+							break;
+						}
+						case 4:{
+							mc.allMeetings();
+							int id;
+							Scanner idScan = new Scanner(System.in);
+							System.out.println("Please enter a id:");
+							id = idScan.nextInt();
+							mc.deleteMeeting(id);
+							mc.allMeetings();
+							break;
+						}
+						default:
+							throw new IllegalArgumentException("Unexpected value: " + meeting1);
+						}
+					} while (meeting1 != 0);
+				
+				}
+				case 7: {
+
+					DecisionRepository decisionRepository = new DecisionRepository();
+					DecisionService decisionService = new DecisionService(decisionRepository);
+					DecisionController dc = new DecisionController(decisionService);
+					
+					int dsc1;
+					Scanner dsc1s = new Scanner(System.in);
+					do {
+						Menu.createSubMenuDesicion();
+						System.out.println("Choose Decision Process\n");
+						dsc1 = dsc1s.nextInt();
+						switch (dsc1) {
+						case 1: {
+							dc.allDecisions();
+							break;
+						}
+						case 2:{
+							Scanner txtScan = new Scanner(System.in);
+							Scanner idScan = new Scanner(System.in);
+							System.out.println("Please enter meeting ID:");
+							int meeting_id = idScan.nextInt();
+							System.out.println("Please enter person ID:");
+							int person_id= idScan.nextInt();
+							System.out.println("Please enter description:");
+							String description = txtScan.nextLine();
+							System.out.println("Please enter confirm_reject:");
+							String confirm_reject = txtScan.nextLine();
+							Decision decision = new Decision(meeting_id, person_id, description, confirm_reject); 
+							dc.addDecision(decision);
+							break;
+						}
+						case 3:{
+							dc.allDecisions();
+							int id,meeting_id, person_id;
+							String description, confirm_reject;
+							Scanner idScan = new Scanner(System.in);
+							Scanner txtScan = new Scanner(System.in);
+							System.out.println("Please enter a id:");
+							id = idScan.nextInt();
+							System.out.println("Please enter a new meeting ID:");
+							meeting_id = idScan.nextInt();
+							System.out.println("Please enter a new person ID:");
+							person_id = idScan.nextInt();
+							System.out.println("Please enter a new description:");
+							description=txtScan.nextLine();
+							System.out.println("Please enter a new confirm_reject:");
+							confirm_reject=txtScan.nextLine();
+							
+							Decision decision= new Decision(meeting_id, person_id,description,confirm_reject); 
+							dc.updateDecision(id, decision);
+							dc.allDecisions();
+							break;
+						}
+						case 4:{
+							dc.allDecisions();
+							int id;
+							Scanner idScan = new Scanner(System.in);
+							System.out.println("Please enter a id:");
+							id = idScan.nextInt();
+							dc.deleteDecision(id);
+							dc.allDecisions();
+							break;
+						}
+						case 5: {
+							ArrayList<String> total = dc.getTotalVotesConfirmed_Rejected();
+							for (int i=0; i<total.size(); i++) {
+								System.out.println(total.get(i));
+							}
+							break;
+						}
+						case 6: {
+							ArrayList<String> confirm_rejectedByPersons = dc.getVotesConfirmed_RejectedByPersons();
+							for (int i=0; i<confirm_rejectedByPersons.size(); i++) {
+								System.out.println(confirm_rejectedByPersons.get(i));
+							}
+							break;
+						}
+						default:
+							throw new IllegalArgumentException("Unexpected value: " + dsc1);
+						}
+					} while (dsc1 != 0);
+				
+				
 				}
 				default:
 					throw new IllegalArgumentException("Unexpected value: " + choose);
