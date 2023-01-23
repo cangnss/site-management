@@ -11,6 +11,7 @@ public class Menu {
 		System.out.println("5 - Expense Process");
 		System.out.println("6 - Meeting Process");
 		System.out.println("7 - Decision Process");
+		System.out.println("8 - Flat Process");
 		System.out.println("0 - Exit");
 		System.out.println("---------------");
 	}
