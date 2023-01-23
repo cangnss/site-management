@@ -9,6 +9,7 @@ import java.util.Scanner;
 import controller.ApartmentController;
 import controller.DecisionController;
 import controller.ExpenseController;
+import controller.FlatNoController;
 import controller.MeetingController;
 import controller.PersonController;
 import controller.RoleController;
@@ -16,6 +17,7 @@ import controller.SubscriptionController;
 import model.Apartment;
 import model.Decision;
 import model.Expense;
+import model.FlatNo;
 import model.Meeting;
 import model.Person;
 import model.Role;
@@ -23,6 +25,7 @@ import model.Subscription;
 import repository.ApartmentRepository;
 import repository.DecisionRepository;
 import repository.ExpenseRepository;
+import repository.FlatNoRepository;
 import repository.MeetingRepository;
 import repository.PersonRepository;
 import repository.RoleRepository;
@@ -30,6 +33,7 @@ import repository.SubscriptionRepository;
 import service.ApartmentService;
 import service.DecisionService;
 import service.ExpenseService;
+import service.FlatNoService;
 import service.MeetingService;
 import service.PersonService;
 import service.RoleService;
@@ -638,6 +642,127 @@ public class Main {
 					} while (dsc1 != 0);
 				
 				
+				}
+				case 8:{
+					FlatNoRepository flatNoRepository = new FlatNoRepository();
+					FlatNoService flatNoService = new FlatNoService(flatNoRepository);
+					FlatNoController flts = new FlatNoController(flatNoService);
+					
+					ApartmentRepository apartmentRepository = new ApartmentRepository();
+					ApartmentService apartmentService = new ApartmentService(apartmentRepository);
+					ApartmentController acc = new ApartmentController(apartmentService);
+					int flt1;
+					Scanner flt1s = new Scanner(System.in);
+					do {
+						Menu.createSubMenuFlatNo();
+						System.out.println("Choose Expense Process\n");
+						flt1 = flt1s.nextInt();
+						switch (flt1) {
+						case 1: {
+							flts.allFlatNo();
+							break;
+						}
+						case 2:{
+							acc.allApartments();
+							
+							Scanner flt2s = new Scanner(System.in);
+							
+							int apartment_id;
+							int number;
+							int person_id;
+							int flat_id;
+							
+							System.out.println("Which apartment would you like to add flatNo to? Please enter apartment id!");
+							apartment_id = flt2s.nextInt();
+							
+							System.out.println("Can you enter a number?");
+							number = flt2s.nextInt();
+							
+							System.out.println("Can you enter a person_id?");
+							person_id = flt2s.nextInt();
+							
+							System.out.println("Can you enter a flat_id?");
+							flat_id = flt2s.nextInt();
+							
+							System.out.println("test: apartment_id: " + apartment_id + " number: " + number + " person_id: " + person_id + " flat_id: " + flat_id + "\n");
+							FlatNo flatNo = new FlatNo(apartment_id, number, person_id, flat_id);
+							flts.addFlatNo(flatNo);
+							break;
+							
+						}
+						case 3:{
+							flts.allFlatNo();
+							
+							int id;
+							int apartment_id;
+							int number;
+							int person_id;
+							int flat_id;
+							
+							Scanner flt3s = new Scanner(System.in);
+							
+							System.out.println("Please enter a id:");
+							id = flt3s.nextInt();
+							
+							System.out.println("Please enter a apartment_id?");
+							apartment_id = flt3s.nextInt();
+							System.out.println("Please enter a number?");
+							number = flt3s.nextInt();
+							
+							System.out.println("Please enter a person_id?");
+							person_id = flt3s.nextInt();
+							
+							System.out.println("Please enter a flat_id?");
+							flat_id = flt3s.nextInt();
+							
+							FlatNo flatNo = new FlatNo(apartment_id, number, person_id, flat_id); 
+							flts.updateFlatNo(id, flatNo);
+							flts.allFlatNo();
+							break;
+							
+						}
+						case 4:{
+							flts.allFlatNo();
+							int id;
+							Scanner idScan = new Scanner(System.in);
+							System.out.println("Please enter a id:");
+							id = idScan.nextInt();
+							flts.deleteFlatNo(id);
+							flts.allFlatNo();
+							break;
+						}
+						case 5:{
+							   int id;
+							   int flat_id;
+	                            acc.allApartments();
+	                            Scanner idScan = new Scanner(System.in);
+	                            System.out.println("Please enter a apartment id");
+	                            id = idScan.nextInt();
+	                            System.out.println("Please enter a flat id");
+	                            flat_id = idScan.nextInt();
+	                            ArrayList<String> flatNo1 = flts.getFlatNoByApartmentIdAndFlatId(id, flat_id);
+	                            for (String flatNo : flatNo1) {
+	                                System.out.println(flatNo);
+	                            }
+	                            break;
+						}
+						case 6:{
+							  
+							   int number;
+	                            Scanner idScan = new Scanner(System.in);
+	                            System.out.println("Please enter a number");
+	                            number= idScan.nextInt();
+	                            
+	                            ArrayList<String> flatNo1 = flts.getFlatNoByNumber(number);
+	                            for (String flatNo : flatNo1) {
+	                                System.out.println(flatNo);
+	                            }
+	                            break;
+						}
+						default:
+							throw new IllegalArgumentException("Unexpected value: " + flt1);
+						}
+					} while (flt1 != 0);
 				}
 				default:
 					throw new IllegalArgumentException("Unexpected value: " + choose);

@@ -40,6 +40,18 @@ public class Menu {
 		System.out.println("0 - Exit");
 	}
 	
+	public static void createSubMenuFlatNo() {
+		System.out.println("---------------");
+		System.out.println("1 - List");
+		System.out.println("2 - Add");
+		System.out.println("3 - Update");
+		System.out.println("4 - Delete");
+		System.out.println("5 - Get FlatNo By ApartmentId And FlatId");
+		System.out.println("6 - Get FlatNo By Number");
+		System.out.println("0 - Exit");
+		System.out.println("---------------");
+	}
+	
 	public static void createSubMenuMeeting() {
 		System.out.println("---------------");
 		System.out.println("1 - List");
