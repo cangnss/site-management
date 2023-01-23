@@ -7,13 +7,16 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 import controller.ApartmentController;
+import controller.BillController;
 import controller.DecisionController;
+import controller.DuesController;
 import controller.ExpenseController;
 import controller.FlatNoController;
 import controller.MeetingController;
 import controller.PersonController;
 import controller.RoleController;
 import controller.SubscriptionController;
+import controller.UserController;
 import model.Apartment;
 import model.Decision;
 import model.Expense;
@@ -23,27 +26,38 @@ import model.Person;
 import model.Role;
 import model.Subscription;
 import repository.ApartmentRepository;
+import repository.BillRepository;
 import repository.DecisionRepository;
+import repository.DuesRepository;
 import repository.ExpenseRepository;
 import repository.FlatNoRepository;
 import repository.MeetingRepository;
 import repository.PersonRepository;
 import repository.RoleRepository;
 import repository.SubscriptionRepository;
+import repository.UserRepository;
 import service.ApartmentService;
+import service.BillService;
 import service.DecisionService;
+import service.DuesService;
 import service.ExpenseService;
 import service.FlatNoService;
 import service.MeetingService;
 import service.PersonService;
 import service.RoleService;
 import service.SubscriptionService;
+import service.UserService;
 import utils.Menu;
 
 public class Main {
 
 	public static void main(String[] args) throws SQLException {
 		// TODO Auto-generated method stub
+		UserRepository userRepository = new UserRepository();
+		UserService userService = new UserService(userRepository);
+		UserController userController = new UserController(userService);
+		
+		
 		try {
 			
 			int choose;
@@ -320,32 +334,42 @@ public class Main {
 							break;
 						}
 						case 2:{
-							acc.allApartments();
-							
-							Scanner sub21s = new Scanner(System.in);
-							Scanner sub22s= new Scanner(System.in);
-							
-							int apartment_id;
-							String service;
-							String period;
-							double cost;
-							
-							System.out.println("Which apartment would you like to add subscription to? Please enter apartment id!");
-							apartment_id = sub21s.nextInt();
-							
-							System.out.println("Can you enter a service?");
-							service = sub22s.nextLine();
-							System.out.println("Can you enter a period?");
-							period = sub22s.nextLine();
-							
-							System.out.println("Can you enter a cost?");
-							cost = sub21s.nextDouble();
-							
-							System.out.println("test: apartment_id: " + apartment_id + " service: " + service + " period: " + period + " cost: " + cost + "\n");
-							Subscription subscription = new Subscription(apartment_id, service, period, cost);
-							subs.addSubscription (subscription );
-							break;
-							
+							String username, password;
+							Scanner uScan = new Scanner(System.in);
+							System.out.println("Please enter a username: ");
+							username = uScan.nextLine();
+							System.out.println("Please enter a password: ");
+							password = uScan.nextLine();
+							if(userController.isManager(username, password)) {
+								acc.allApartments();
+								
+								Scanner sub21s = new Scanner(System.in);
+								Scanner sub22s= new Scanner(System.in);
+								
+								int apartment_id;
+								String service;
+								String period;
+								double cost;
+								
+								System.out.println("Which apartment would you like to add subscription to? Please enter apartment id!");
+								apartment_id = sub21s.nextInt();
+								
+								System.out.println("Can you enter a service?");
+								service = sub22s.nextLine();
+								System.out.println("Can you enter a period?");
+								period = sub22s.nextLine();
+								
+								System.out.println("Can you enter a cost?");
+								cost = sub21s.nextDouble();
+								
+								System.out.println("test: apartment_id: " + apartment_id + " service: " + service + " period: " + period + " cost: " + cost + "\n");
+								Subscription subscription = new Subscription(apartment_id, service, period, cost);
+								subs.addSubscription (subscription );
+								break;
+							}else {
+								System.out.println("Username or password is not correct!");
+								break;
+							}
 						}
 						case 3:{
 							subs.allSubscriptions();
@@ -763,6 +787,92 @@ public class Main {
 							throw new IllegalArgumentException("Unexpected value: " + flt1);
 						}
 					} while (flt1 != 0);
+				}
+				case 9:{
+					BillRepository billRepository = new BillRepository();
+					BillService billService = new BillService(billRepository);
+					BillController billc = new BillController(billService);
+					
+					ApartmentRepository apartmentRepository = new ApartmentRepository();
+					ApartmentService apartmentService = new ApartmentService(apartmentRepository);
+					ApartmentController acc = new ApartmentController(apartmentService);
+					int bl1;
+					Scanner flt1s = new Scanner(System.in);
+					do {
+						Menu.createSubMenuBill();;
+						System.out.println("Choose Bill Process\n");
+						bl1 = flt1s.nextInt();
+						switch (bl1) {
+						case 1: {
+							ArrayList<String> bills = billc.allBills();
+							for (String bill : bills) {
+								System.out.println(bill);
+							}
+							break;
+						}
+						case 2:{
+							
+							break;
+						}
+						case 3:{
+							acc.allApartments();
+							int id;
+							Scanner idScan = new Scanner(System.in);
+							System.out.println("Please choose a apartment");
+							id = idScan.nextInt();
+							ArrayList<String> bills = billc.getBillFromByApartmentId(id);
+							for (String bill : bills) {
+								System.out.println(bill);
+							}
+							break;
+						}
+						default:
+							throw new IllegalArgumentException("Unexpected value: " + bl1);
+						}
+					} while (bl1 != 0);
+				}
+				case 10:{
+					DuesRepository duesRepository = new DuesRepository();
+					DuesService duesService = new DuesService(duesRepository);
+					DuesController dues = new DuesController(duesService);
+					
+					ApartmentRepository apartmentRepository = new ApartmentRepository();
+					ApartmentService apartmentService = new ApartmentService(apartmentRepository);
+					ApartmentController acc = new ApartmentController(apartmentService);
+					
+					int dues1;
+					Scanner dues1s = new Scanner(System.in);
+					do {
+						Menu.createSubMenuDues();
+						System.out.println("Choose Expense Process\n");
+						dues1 = dues1s.nextInt();
+						switch (dues1) {
+						case 1: {
+							dues.allDues();
+							break;
+						}
+						
+						case 2:{
+							    int id;
+							    String month;
+							    acc.allApartments();
+	                            Scanner idScan = new Scanner(System.in);
+	                            Scanner monthScan = new Scanner(System.in);
+	                            System.out.println("Please enter a apartment id");
+	                            id = idScan.nextInt();
+	                            System.out.println("Please enter a date");
+	                            month = monthScan.nextLine();
+	                            ArrayList<String> duess = dues.getSumDuesbyApartmentAndMonth(id, month);
+	                            for (String duess1 : duess) {
+	                                System.out.println(duess1);
+	                            }
+	                            break;
+						}
+						
+						default:
+							throw new IllegalArgumentException("Unexpected value: " + dues1);
+						}
+					} while (dues1 != 0);
 				}
 				default:
 					throw new IllegalArgumentException("Unexpected value: " + choose);

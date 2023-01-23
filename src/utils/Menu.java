@@ -12,6 +12,8 @@ public class Menu {
 		System.out.println("6 - Meeting Process");
 		System.out.println("7 - Decision Process");
 		System.out.println("8 - Flat Process");
+		System.out.println("9 - Bill Process");
+		System.out.println("10 - Due Process");
 		System.out.println("0 - Exit");
 		System.out.println("---------------");
 	}
@@ -103,6 +105,22 @@ public class Menu {
 		System.out.println("5 - Get Subscription apartment");
 		System.out.println("0 - Exit");
 		System.out.println("---------------");
+	}
+	
+	public static void createSubMenuBill() {
+		System.out.println("---------------");
+		System.out.println("1 - List");
+		System.out.println("2 - Add");
+		System.out.println("3 - Get Bill By Apartment");
+		System.out.println("0 - Exit");
+		System.out.println("---------------");
+	}
+	
+	public static void createSubMenuDues() {
+		System.out.println("---------------");
+		System.out.println("1 - List");
+		System.out.println("2 - get Sum Dues by Apartment And Month");
+		System.out.println("0 - Exit");
 	}
 	
 	public static void createSubMenuAccount() {
