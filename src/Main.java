@@ -330,13 +330,25 @@ public class Main {
 					int subs1;
 					Scanner sub1s = new Scanner(System.in);
 					do {
-						Menu.createSubMenuExpense();
+						Menu.createSubMenuSubscription();
 						System.out.println("Choose Expense Process\n");
 						subs1 = sub1s.nextInt();
 						switch (subs1) {
 						case 1: {
-							subs.allSubscriptions();
-							break;
+							String username, password;
+							Scanner uScan = new Scanner(System.in);
+							System.out.println("Please enter a username: ");
+							username = uScan.nextLine();
+							System.out.println("Please enter a password: ");
+							password = uScan.nextLine();
+							boolean result = userController.isManager(username, password);
+							if(result) {
+								subs.allSubscriptions();
+								break;
+							}else {
+								System.out.println("Username or password is not correct!");
+								break;
+							}
 						}
 						case 2:{
 							String username, password;
@@ -380,44 +392,76 @@ public class Main {
 							}
 						}
 						case 3:{
-							subs.allSubscriptions();
-							int id;
-							String service;
-							String period;
-							double cost;
-							Scanner sub31s = new Scanner(System.in);
-							Scanner sub32s = new Scanner(System.in);
-							
-							System.out.println("Please enter a id:");
-							id = sub31s.nextInt();
-							
-							System.out.println("Please enter a service:");
-							service = sub32s.nextLine();
-							
-							System.out.println("Please enter a period:");
-							period = sub32s.nextLine();
-					
-							System.out.println("Please enter a new cost:");
-							cost = sub31s.nextDouble();
-							
-							Subscription subscription = new Subscription(id,service,period, cost); 
-							subs.updateSubscription(id, subscription);
-							subs.allSubscriptions();
-							break;
-							
+							String username, password;
+							Scanner uScan = new Scanner(System.in);
+							System.out.println("Please enter a username: ");
+							username = uScan.nextLine();
+							System.out.println("Please enter a password: ");
+							password = uScan.nextLine();
+							boolean result = userController.isManager(username, password);
+							if(result) {
+								subs.allSubscriptions();
+								int id;
+								String service;
+								String period;
+								double cost;
+								Scanner sub31s = new Scanner(System.in);
+								Scanner sub32s = new Scanner(System.in);
+								
+								System.out.println("Please enter a id:");
+								id = sub31s.nextInt();
+								
+								System.out.println("Please enter a service:");
+								service = sub32s.nextLine();
+								
+								System.out.println("Please enter a period:");
+								period = sub32s.nextLine();
+						
+								System.out.println("Please enter a new cost:");
+								cost = sub31s.nextDouble();
+								
+								Subscription subscription = new Subscription(id,service,period, cost); 
+								subs.updateSubscription(id, subscription);
+								subs.allSubscriptions();
+								break;
+							}else {
+								System.out.println("username or password is not correct");
+								break;
+							}
 						}
 						case 4:{
-							subs.allSubscriptions();
-							int id;
-							Scanner idScan = new Scanner(System.in);
-							System.out.println("Please enter a id:");
-							id = idScan.nextInt();
-							subs.deleteSubscription(id);
-							subs.allSubscriptions();
-							break;
+							String username, password;
+							Scanner uScan = new Scanner(System.in);
+							System.out.println("Please enter a username: ");
+							username = uScan.nextLine();
+							System.out.println("Please enter a password: ");
+							password = uScan.nextLine();
+							boolean result = userController.isManager(username, password);
+							if(result) {
+								subs.allSubscriptions();
+								int id;
+								Scanner idScan = new Scanner(System.in);
+								System.out.println("Please enter a id:");
+								id = idScan.nextInt();
+								subs.deleteSubscription(id);
+								subs.allSubscriptions();
+								break;
+							}else {
+								System.out.println("username or password is not correct");
+								break;
+							}
+							
 						}
 						case 5:{
-							   int id;
+							String username, password;
+							Scanner uScan = new Scanner(System.in);
+							System.out.println("Please enter a username: ");
+							username = uScan.nextLine();
+							System.out.println("Please enter a password: ");
+							password = uScan.nextLine();
+							boolean result = userController.isManager(username, password);
+							if(result) {
+								int id;
 	                            acc.allApartments();
 	                            Scanner idScan = new Scanner(System.in);
 	                            System.out.println("Please enter a apartment id");
@@ -427,6 +471,11 @@ public class Main {
 	                                System.out.println(subscription);
 	                            }
 	                            break;
+							}else {
+								System.out.println("username or password is not correct");
+								break;
+							}
+							   
 						}
 						default:
 							throw new IllegalArgumentException("Unexpected value: " + subs1);
