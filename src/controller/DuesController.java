@@ -19,5 +19,14 @@ public class DuesController {
 	public ArrayList<String> getSumDuesbyApartmentAndMonth(int id, String date){
 		return duesService.getSumDuesbyApartmentAndMonth(id, date);
 	}
+	public void addDues(Dues dues) {
+		duesService.addDues(dues);
+	}
+	public void updateDues(int id, Dues dues) {
+		duesService.updateDues(id, dues);
+	}
+	public void deleteDues(int id) {
+		duesService.deleteDues(id);
+	}
 
 }

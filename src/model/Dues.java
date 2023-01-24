@@ -10,6 +10,10 @@ public Dues(int number_id, String month, Double cost) {
 	this.month = month;
 	this.cost = cost;
 }
+public Dues(String month, double cost) {
+	this.month = month;
+	this.cost = cost;
+}
 public int getNumber_id() {
 	return number_id;
 }

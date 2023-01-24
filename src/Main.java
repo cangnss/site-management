@@ -6,6 +6,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import controller.AccountController;
 import controller.ApartmentController;
 import controller.BillController;
 import controller.DecisionController;
@@ -17,14 +18,17 @@ import controller.PersonController;
 import controller.RoleController;
 import controller.SubscriptionController;
 import controller.UserController;
+import model.Account;
 import model.Apartment;
 import model.Decision;
+import model.Dues;
 import model.Expense;
 import model.FlatNo;
 import model.Meeting;
 import model.Person;
 import model.Role;
 import model.Subscription;
+import repository.AccountRepository;
 import repository.ApartmentRepository;
 import repository.BillRepository;
 import repository.DecisionRepository;
@@ -36,6 +40,7 @@ import repository.PersonRepository;
 import repository.RoleRepository;
 import repository.SubscriptionRepository;
 import repository.UserRepository;
+import service.AccountService;
 import service.ApartmentService;
 import service.BillService;
 import service.DecisionService;
@@ -340,7 +345,10 @@ public class Main {
 							username = uScan.nextLine();
 							System.out.println("Please enter a password: ");
 							password = uScan.nextLine();
-							if(userController.isManager(username, password)) {
+							
+							boolean result = userController.isManager(username, password);
+							System.out.println("result: " + result);
+							if(true) {
 								acc.allApartments();
 								
 								Scanner sub21s = new Scanner(System.in);
@@ -851,8 +859,46 @@ public class Main {
 							dues.allDues();
 							break;
 						}
-						
 						case 2:{
+							Scanner txtScan = new Scanner(System.in);
+							Scanner idScan = new Scanner(System.in);
+							System.out.println("Please enter number ID:");
+							int number_id = idScan.nextInt();
+							System.out.println("Please enter month:");
+							String month= txtScan.nextLine();
+							System.out.println("Please enter amount:");
+							double cost = txtScan.nextDouble();
+							Dues duess = new Dues(number_id, month, cost); 
+							dues.addDues(duess);
+							break;
+						}
+						case 3:{
+							dues.allDues();
+							Scanner idScan = new Scanner(System.in);
+							Scanner txtScan = new Scanner(System.in);
+							System.out.println("Please enter a id:");
+							int id = idScan.nextInt();
+							System.out.println("Please enter a new month:");
+							String month= txtScan.nextLine();
+							System.out.println("Please enter a new amount:");
+							double cost = txtScan.nextDouble();
+							
+							Dues duess= new Dues( month, cost); 
+							dues.updateDues(id, duess);
+							dues.allDues();
+							break;
+						}
+						case 4:{
+							dues.allDues();
+							int id;
+							Scanner idScan = new Scanner(System.in);
+							System.out.println("Please enter a id:");
+							id = idScan.nextInt();
+							dues.deleteDues(id);
+							dues.allDues();
+							break;
+						}
+						case 5:{
 							    int id;
 							    String month;
 							    acc.allApartments();
@@ -873,6 +919,108 @@ public class Main {
 							throw new IllegalArgumentException("Unexpected value: " + dues1);
 						}
 					} while (dues1 != 0);
+				}
+				case 11:{
+					AccountRepository accountRepository = new AccountRepository();
+					AccountService accountService = new AccountService(accountRepository);
+					AccountController account = new AccountController(accountService);
+					
+					ApartmentRepository apartmentRepository = new ApartmentRepository();
+					ApartmentService apartmentService = new ApartmentService(apartmentRepository);
+					ApartmentController acc = new ApartmentController(apartmentService);
+					
+					int accnt1;
+					Scanner accnt1s = new Scanner(System.in);
+					do {
+						Menu.createSubMenuAccount();
+						System.out.println("Choose Expense Process\n");
+						accnt1 = accnt1s.nextInt();
+						switch (accnt1) {
+						case 1: {
+							account.allAccounts();
+							break;
+						}
+						case 2:{
+							acc.allApartments();
+							
+							Scanner accnt2s = new Scanner(System.in);
+						
+							Double balance;
+							int apartment_id;
+							int bill_id;
+							
+							
+							System.out.println("Can you enter a balance?");
+							balance= accnt2s.nextDouble();
+							
+							System.out.println("Can you enter a apartment id?");
+							apartment_id = accnt2s.nextInt();
+							
+							System.out.println("Can you enter a bill id?");
+							bill_id = accnt2s.nextInt();
+							
+							System.out.println("test: balance: " + balance + " apartment_id: " + apartment_id + " bill_id: " + bill_id +"\n");
+							Account account1 = new Account(balance, apartment_id, bill_id);
+							account.addAccount(account1);
+							break;
+							
+						}
+						case 3:{
+							account.allAccounts();
+							
+							int id;
+							Double balance;
+							int apartment_id;
+							int bill_id;
+							
+							Scanner accnt3s = new Scanner(System.in);
+							
+							System.out.println("Please enter a id:");
+							id =  accnt3s.nextInt();
+							
+							System.out.println("Please enter a balance?");
+							balance =  accnt3s.nextDouble();
+							
+							System.out.println("Please enter a apartment_id?");
+							apartment_id =  accnt3s.nextInt();
+				
+							System.out.println("Please enter a bill_id?");
+							bill_id =  accnt3s.nextInt();
+			
+							Account account2 = new Account(balance, apartment_id, bill_id); 
+							account.updateAccount(id, account2);
+							account.allAccounts();
+							break;
+							
+						}
+						case 4:{
+							account.allAccounts();
+							int id;
+							Scanner idScan = new Scanner(System.in);
+							System.out.println("Please enter a id:");
+							id = idScan.nextInt();
+							account.deleteAccount(id);
+							account.allAccounts();
+							break;
+						}
+						
+						case 5:{
+							    int id;
+							    acc.allApartments();
+	                            Scanner intScan = new Scanner(System.in);
+	                            System.out.println("Please enter a apartment id");
+	                            id= intScan.nextInt();
+	                            ArrayList<String> accounts = account.getAvailableBalance(id);
+	                            for (String accounts1 : accounts) {
+	                                System.out.println(accounts1);
+	                            }
+	                            break;
+						}
+						
+						default:
+							throw new IllegalArgumentException("Unexpected value: " + accnt1);
+						}
+					} while (accnt1 != 0);
 				}
 				default:
 					throw new IllegalArgumentException("Unexpected value: " + choose);

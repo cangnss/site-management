@@ -19,6 +19,15 @@ public class DuesService {
 	public ArrayList<String> getSumDuesbyApartmentAndMonth(int id, String date){
 		return duesRepository.getSumDuesbyApartmentAndMonth(id, date);
 	}
+	public void addDues(Dues dues) {
+		duesRepository.addDues(dues);
+	}
+	public void updateDues(int id, Dues dues) {
+		duesRepository.updateDues(id, dues);
+	}
+	public void deleteDues(int id) {
+		duesRepository.deleteDues(id);
+	}
 
     
 }

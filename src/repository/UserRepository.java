@@ -10,6 +10,7 @@ import utils.DbConnection;
 
 public class UserRepository implements IUserRepository{
 	Connection con = DbConnection.createConnection();
+	ArrayList<String> users = new ArrayList<>(); 
 	@Override
 	public boolean isManager(String username, String password) {
 		try {
@@ -19,10 +20,15 @@ public class UserRepository implements IUserRepository{
 			prepStmt.setString(2, password);
 			ResultSet rs = prepStmt.executeQuery();
 			while (rs.next()) {
-				System.out.println(rs.getInt(0));
+				System.out.println("geldi");
+				users.add(rs.getString("fullName") + rs.getString("name") + rs.getString("type"));
+			}
+			
+			
+			for (String user : users) {
+				System.out.println("user"+user);
 			}
 			prepStmt.close();
-			return true;
 		} catch (Exception e) {
 			// TODO: handle exception
 			System.out.println("user exception");

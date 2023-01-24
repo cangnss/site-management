@@ -1,8 +1,4 @@
 package service;
-
-import java.util.ArrayList;
-
-import model.User;
 import repository.UserRepository;
 
 public class UserService {
