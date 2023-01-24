@@ -20,6 +20,7 @@ import controller.SubscriptionController;
 import controller.UserController;
 import model.Account;
 import model.Apartment;
+import model.Bill;
 import model.Decision;
 import model.Dues;
 import model.Expense;
@@ -341,7 +342,7 @@ public class Main {
 							username = uScan.nextLine();
 							System.out.println("Please enter a password: ");
 							password = uScan.nextLine();
-							boolean result = userController.isManager(username, password);
+							boolean result = userController.isController(username, password);
 							if(result) {
 								subs.allSubscriptions();
 								break;
@@ -358,7 +359,7 @@ public class Main {
 							System.out.println("Please enter a password: ");
 							password = uScan.nextLine();
 							
-							boolean result = userController.isManager(username, password);
+							boolean result = userController.isController(username, password);
 							System.out.println("result: " + result);
 							if(result) {
 								acc.allApartments();
@@ -398,7 +399,7 @@ public class Main {
 							username = uScan.nextLine();
 							System.out.println("Please enter a password: ");
 							password = uScan.nextLine();
-							boolean result = userController.isManager(username, password);
+							boolean result = userController.isController(username, password);
 							if(result) {
 								subs.allSubscriptions();
 								int id;
@@ -436,7 +437,7 @@ public class Main {
 							username = uScan.nextLine();
 							System.out.println("Please enter a password: ");
 							password = uScan.nextLine();
-							boolean result = userController.isManager(username, password);
+							boolean result = userController.isController(username, password);
 							if(result) {
 								subs.allSubscriptions();
 								int id;
@@ -459,7 +460,7 @@ public class Main {
 							username = uScan.nextLine();
 							System.out.println("Please enter a password: ");
 							password = uScan.nextLine();
-							boolean result = userController.isManager(username, password);
+							boolean result = userController.isController(username, password);
 							if(result) {
 								int id;
 	                            acc.allApartments();
@@ -499,10 +500,33 @@ public class Main {
 						exp1 = exp1s.nextInt();
 						switch (exp1) {
 						case 1: {
-							exps.allExpenses();
-							break;
+							String username, password;
+							Scanner uScan = new Scanner(System.in);
+							System.out.println("Please enter a username: ");
+							username = uScan.nextLine();
+							System.out.println("Please enter a password: ");
+							password = uScan.nextLine();
+							boolean result = userController.isController(username, password);
+							if(result) {
+								exps.allExpenses();
+								break;
+							}else {
+								System.out.println("Username or password is not correct!");
+								break;
+							}
+						
 						}
 						case 2:{
+							String username, password;
+							Scanner uScan = new Scanner(System.in);
+							System.out.println("Please enter a username: ");
+							username = uScan.nextLine();
+							System.out.println("Please enter a password: ");
+							password = uScan.nextLine();
+							
+							boolean result = userController.isController(username, password);
+							System.out.println("result: " + result);
+							if(result) {
 							acc.allApartments();
 							
 							Scanner exp2s = new Scanner(System.in);
@@ -525,9 +549,22 @@ public class Main {
 							Expense expense = new Expense(apartment_id, description, cost);
 							exps.addExpense(expense);
 							break;
-							
+							}else {
+								System.out.println("username or password is not correct");
+								break;
+							}
 						}
 						case 3:{
+							String username, password;
+							Scanner uScan = new Scanner(System.in);
+							System.out.println("Please enter a username: ");
+							username = uScan.nextLine();
+							System.out.println("Please enter a password: ");
+							password = uScan.nextLine();
+							
+							boolean result = userController.isController(username, password);
+							System.out.println("result: " + result);
+							if(result) {
 							exps.allExpenses();
 							int id;
 							String description;
@@ -548,9 +585,22 @@ public class Main {
 							exps.updateExpense(id, expense);
 							exps.allExpenses();
 							break;
-							
+							}else {
+								System.out.println("username or password is not correct");
+								break;
+							}
 						}
 						case 4:{
+							String username, password;
+							Scanner uScan = new Scanner(System.in);
+							System.out.println("Please enter a username: ");
+							username = uScan.nextLine();
+							System.out.println("Please enter a password: ");
+							password = uScan.nextLine();
+							
+							boolean result = userController.isController(username, password);
+							System.out.println("result: " + result);
+							if(result) {
 							exps.allExpenses();
 							int id;
 							Scanner idScan = new Scanner(System.in);
@@ -559,8 +609,22 @@ public class Main {
 							exps.deleteExpense(id);
 							exps.allExpenses();
 							break;
+							}else {
+								System.out.println("username or password is not correct");
+								break;
+							}
 						}
 						case 5:{
+							String username, password;
+							Scanner uScan = new Scanner(System.in);
+							System.out.println("Please enter a username: ");
+							username = uScan.nextLine();
+							System.out.println("Please enter a password: ");
+							password = uScan.nextLine();
+							
+							boolean result = userController.isController(username, password);
+							System.out.println("result: " + result);
+							if(result) {
 							int id;
 							acc.allApartments();
 							Scanner idScan = new Scanner(System.in);
@@ -571,6 +635,10 @@ public class Main {
 								System.out.println(expense);
 							}
 							break;
+							}else {
+								System.out.println("username or password is not correct");
+								break;
+							}
 						}
 						default:
 							throw new IllegalArgumentException("Unexpected value: " + exp1);
@@ -854,24 +922,83 @@ public class Main {
 					ApartmentService apartmentService = new ApartmentService(apartmentRepository);
 					ApartmentController acc = new ApartmentController(apartmentService);
 					int bl1;
-					Scanner flt1s = new Scanner(System.in);
+					Scanner bl1s = new Scanner(System.in);
 					do {
 						Menu.createSubMenuBill();;
 						System.out.println("Choose Bill Process\n");
-						bl1 = flt1s.nextInt();
+						bl1 = bl1s.nextInt();
 						switch (bl1) {
 						case 1: {
+							String username, password;
+							Scanner uScan = new Scanner(System.in);
+							System.out.println("Please enter a username: ");
+							username = uScan.nextLine();
+							System.out.println("Please enter a password: ");
+							password = uScan.nextLine();
+							
+							boolean result = userController.isManagerAss(username, password);
+							System.out.println("result: " + result);
+							if(result) {
 							ArrayList<String> bills = billc.allBills();
 							for (String bill : bills) {
 								System.out.println(bill);
 							}
 							break;
+							}else {
+								System.out.println("username or password is not correct");
+								break;
+							}
 						}
 						case 2:{
+							String username, password;
+							Scanner uScan = new Scanner(System.in);
+							System.out.println("Please enter a username: ");
+							username = uScan.nextLine();
+							System.out.println("Please enter a password: ");
+							password = uScan.nextLine();
 							
+							boolean result = userController.isManagerAss(username, password);
+							System.out.println("result: " + result);
+							if(result) {
+                            Scanner bl2s = new Scanner(System.in);
+                            Scanner bl21s = new Scanner(System.in);
+							int subscription_id;
+							int expense_id;
+							String date;
+							Double amount;
+							
+							System.out.println("Please enter a subscription id");
+							subscription_id = bl2s.nextInt();
+							
+							System.out.println("Please enter a expense id");
+							expense_id = bl2s.nextInt();
+							
+							System.out.println("Please enter a date");
+							date = bl21s.nextLine();
+							System.out.println("Please enter a amount");
+							amount= bl21s.nextDouble();
+							System.out.println("test: subscription_id: " + subscription_id + " expense_id: " + expense_id + " date: " + date  + "\n");
+							Bill bill = new Bill(subscription_id, expense_id, date, amount);
+							billc.addBill(bill);
 							break;
+							}else {
+								System.out.println("username or password is not correct");
+								break;
+							}
+							
 						}
 						case 3:{
+							
+							String username, password;
+							Scanner uScan = new Scanner(System.in);
+							System.out.println("Please enter a username: ");
+							username = uScan.nextLine();
+							System.out.println("Please enter a password: ");
+							password = uScan.nextLine();
+							
+							boolean result = userController.isManagerAss(username, password);
+							System.out.println("result: " + result);
+							if(result) {
 							acc.allApartments();
 							int id;
 							Scanner idScan = new Scanner(System.in);
@@ -882,6 +1009,10 @@ public class Main {
 								System.out.println(bill);
 							}
 							break;
+							}else {
+								System.out.println("username or password is not correct");
+								break;
+							}
 						}
 						default:
 							throw new IllegalArgumentException("Unexpected value: " + bl1);
@@ -905,10 +1036,34 @@ public class Main {
 						dues1 = dues1s.nextInt();
 						switch (dues1) {
 						case 1: {
-							dues.allDues();
-							break;
+							String username, password;
+							Scanner uScan = new Scanner(System.in);
+							System.out.println("Please enter a username: ");
+							username = uScan.nextLine();
+							System.out.println("Please enter a password: ");
+							password = uScan.nextLine();
+							boolean result = userController.isManagerAss(username, password);
+							if(result) {
+								dues.allDues();
+								break;
+							}else {
+								System.out.println("Username or password is not correct!");
+								break;
+							}
+							
 						}
 						case 2:{
+
+							String username, password;
+							Scanner uScan = new Scanner(System.in);
+							System.out.println("Please enter a username: ");
+							username = uScan.nextLine();
+							System.out.println("Please enter a password: ");
+							password = uScan.nextLine();
+							
+							boolean result = userController.isManagerAss(username, password);
+							System.out.println("result: " + result);
+							if(result) {
 							Scanner txtScan = new Scanner(System.in);
 							Scanner idScan = new Scanner(System.in);
 							System.out.println("Please enter number ID:");
@@ -920,8 +1075,22 @@ public class Main {
 							Dues duess = new Dues(number_id, month, cost); 
 							dues.addDues(duess);
 							break;
+							}else {
+								System.out.println("Username or password is not correct!");
+								break;
+							}
 						}
 						case 3:{
+							String username, password;
+							Scanner uScan = new Scanner(System.in);
+							System.out.println("Please enter a username: ");
+							username = uScan.nextLine();
+							System.out.println("Please enter a password: ");
+							password = uScan.nextLine();
+							
+							boolean result = userController.isManagerAss(username, password);
+							System.out.println("result: " + result);
+							if(result) {
 							dues.allDues();
 							Scanner idScan = new Scanner(System.in);
 							Scanner txtScan = new Scanner(System.in);
@@ -936,8 +1105,23 @@ public class Main {
 							dues.updateDues(id, duess);
 							dues.allDues();
 							break;
+							}else {
+								System.out.println("Username or password is not correct!");
+								break;
+							}
 						}
+						
 						case 4:{
+							String username, password;
+							Scanner uScan = new Scanner(System.in);
+							System.out.println("Please enter a username: ");
+							username = uScan.nextLine();
+							System.out.println("Please enter a password: ");
+							password = uScan.nextLine();
+							
+							boolean result = userController.isManagerAss(username, password);
+							System.out.println("result: " + result);
+							if(result) {
 							dues.allDues();
 							int id;
 							Scanner idScan = new Scanner(System.in);
@@ -946,11 +1130,26 @@ public class Main {
 							dues.deleteDues(id);
 							dues.allDues();
 							break;
+							}else {
+								System.out.println("Username or password is not correct!");
+								break;
+							}
 						}
 						case 5:{
+							String username, password;
+							Scanner uScan = new Scanner(System.in);
+							System.out.println("Please enter a username: ");
+							username = uScan.nextLine();
+							System.out.println("Please enter a password: ");
+							password = uScan.nextLine();
+							
+							boolean result = userController.isManagerAss(username, password);
+							System.out.println("result: " + result);
+							if(result) {
 							    int id;
 							    String month;
 							    acc.allApartments();
+							    dues.allDues();
 	                            Scanner idScan = new Scanner(System.in);
 	                            Scanner monthScan = new Scanner(System.in);
 	                            System.out.println("Please enter a apartment id");
@@ -962,6 +1161,10 @@ public class Main {
 	                                System.out.println(duess1);
 	                            }
 	                            break;
+							}else {
+								System.out.println("Username or password is not correct!");
+								break;
+							}
 						}
 						
 						default:
@@ -986,10 +1189,33 @@ public class Main {
 						accnt1 = accnt1s.nextInt();
 						switch (accnt1) {
 						case 1: {
-							account.allAccounts();
-							break;
+							String username, password;
+							Scanner uScan = new Scanner(System.in);
+							System.out.println("Please enter a username: ");
+							username = uScan.nextLine();
+							System.out.println("Please enter a password: ");
+							password = uScan.nextLine();
+							boolean result = userController.isManager(username, password);
+							if(result) {
+								account.allAccounts();
+								break;
+							}else {
+								System.out.println("Username or password is not correct!");
+								break;
+							}
+							
 						}
 						case 2:{
+							String username, password;
+							Scanner uScan = new Scanner(System.in);
+							System.out.println("Please enter a username: ");
+							username = uScan.nextLine();
+							System.out.println("Please enter a password: ");
+							password = uScan.nextLine();
+							
+							boolean result = userController.isManager(username, password);
+							System.out.println("result: " + result);
+							if(result) {
 							acc.allApartments();
 							
 							Scanner accnt2s = new Scanner(System.in);
@@ -1012,9 +1238,23 @@ public class Main {
 							Account account1 = new Account(balance, apartment_id, bill_id);
 							account.addAccount(account1);
 							break;
+							}else {
+								System.out.println("Username or password is not correct!");
+								break;
+							}
 							
 						}
 						case 3:{
+							String username, password;
+							Scanner uScan = new Scanner(System.in);
+							System.out.println("Please enter a username: ");
+							username = uScan.nextLine();
+							System.out.println("Please enter a password: ");
+							password = uScan.nextLine();
+							
+							boolean result = userController.isManager(username, password);
+							System.out.println("result: " + result);
+							if(result) {
 							account.allAccounts();
 							
 							int id;
@@ -1040,9 +1280,23 @@ public class Main {
 							account.updateAccount(id, account2);
 							account.allAccounts();
 							break;
+							}else {
+								System.out.println("Username or password is not correct!");
+								break;
+							}
 							
 						}
 						case 4:{
+							String username, password;
+							Scanner uScan = new Scanner(System.in);
+							System.out.println("Please enter a username: ");
+							username = uScan.nextLine();
+							System.out.println("Please enter a password: ");
+							password = uScan.nextLine();
+							
+							boolean result = userController.isManager(username, password);
+							System.out.println("result: " + result);
+							if(result) {
 							account.allAccounts();
 							int id;
 							Scanner idScan = new Scanner(System.in);
@@ -1051,9 +1305,23 @@ public class Main {
 							account.deleteAccount(id);
 							account.allAccounts();
 							break;
+							}else {
+								System.out.println("Username or password is not correct!");
+								break;
+							}
 						}
 						
 						case 5:{
+							String username, password;
+							Scanner uScan = new Scanner(System.in);
+							System.out.println("Please enter a username: ");
+							username = uScan.nextLine();
+							System.out.println("Please enter a password: ");
+							password = uScan.nextLine();
+							
+							boolean result = userController.isManager(username, password);
+							System.out.println("result: " + result);
+							if(result) {
 							    int id;
 							    acc.allApartments();
 	                            Scanner intScan = new Scanner(System.in);
@@ -1064,6 +1332,10 @@ public class Main {
 	                                System.out.println(accounts1);
 	                            }
 	                            break;
+							}else {
+								System.out.println("Username or password is not correct!");
+								break;
+							}
 						}
 						
 						default:

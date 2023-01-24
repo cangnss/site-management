@@ -14,11 +14,11 @@ public class BillRepository implements IBillRepository{
 	@Override
 	public ArrayList<String> allBills() {
 		try {
-			String query = "select name, description, cost from Expense inner join Apartment on Apartment.id = Expense.apartment_id inner join Bill on Bill.expense_id = Expense.id";
+			String query = "select name, service, description, SUM(Expense.cost + Subscription.cost) as cost from Subscription inner join Apartment on Apartment.id = Subscription.apartment_id inner join Bill on Bill.subscription_id = Subscription.id inner join Expense on Bill.expense_id=Expense.id group by name, description, service";
 			PreparedStatement prepStmt=con.prepareStatement(query);
 			ResultSet rs = prepStmt.executeQuery();
 			while (rs.next()) {
-			    System.out.println("Name: " + rs.getString("name") + " Description: " + rs.getString("description") + " cost: " + rs.getDouble("cost"));
+			    System.out.println("Name: " + rs.getString("name") + " service: " + rs.getString("service") +" Description: " + rs.getString("description") + " cost: " + rs.getDouble("cost"));
 			}
 			prepStmt.close();
 		} catch (Exception e) {
@@ -36,7 +36,7 @@ public class BillRepository implements IBillRepository{
 			prepStmt.setInt(1, bill.getSubscription_id());
 			prepStmt.setInt(2, bill.getExpense_id());
 			prepStmt.setString(3, bill.getDate());
-			prepStmt.setDouble(3, bill.getAmount());
+			prepStmt.setDouble(4, bill.getAmount());
 			prepStmt.executeUpdate();
 			prepStmt.close();
 			System.out.println("Inserted New Bill!");

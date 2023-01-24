@@ -120,7 +120,10 @@ public class Menu {
 	public static void createSubMenuDues() {
 		System.out.println("---------------");
 		System.out.println("1 - List");
-		System.out.println("2 - get Sum Dues by Apartment And Month");
+		System.out.println("2 - Add");
+		System.out.println("3 - Update");
+		System.out.println("4 - Delete");
+		System.out.println("5 - get Sum Dues by Apartment And Month");
 		System.out.println("0 - Exit");
 	}
 	
