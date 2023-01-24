@@ -348,7 +348,7 @@ public class Main {
 							
 							boolean result = userController.isManager(username, password);
 							System.out.println("result: " + result);
-							if(true) {
+							if(result) {
 								acc.allApartments();
 								
 								Scanner sub21s = new Scanner(System.in);

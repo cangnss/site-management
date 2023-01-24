@@ -14,21 +14,16 @@ public class UserRepository implements IUserRepository{
 	@Override
 	public boolean isManager(String username, String password) {
 		try {
-			String query = "select fullName, name, type from User inner join Role on User.role_id = Role.id inner join Person on Person.id = User.person_id inner join Apartment on Role.apartment_id = Apartment.id where username = ? and password = ?";
+			String query = "SELECT * from Users WHERE username='" + username + "' and password='" + password + "'";;
 			PreparedStatement prepStmt=con.prepareStatement(query);
-			prepStmt.setString(1, username);
-			prepStmt.setString(2, password);
 			ResultSet rs = prepStmt.executeQuery();
-			while (rs.next()) {
-				System.out.println("geldi");
-				users.add(rs.getString("fullName") + rs.getString("name") + rs.getString("type"));
-			}
-			
-			
-			for (String user : users) {
-				System.out.println("user"+user);
-			}
-			prepStmt.close();
+			if( rs.next()){
+				prepStmt.close();
+		        return true;
+		   } else {
+				prepStmt.close();
+		       return false;
+		   }
 		} catch (Exception e) {
 			// TODO: handle exception
 			System.out.println("user exception");
