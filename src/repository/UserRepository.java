@@ -14,7 +14,7 @@ public class UserRepository implements IUserRepository{
 	@Override
 	public boolean isManager(String username, String password) {
 		try {
-			String query = "SELECT * from Users WHERE username='" + username + "' and password='" + password + "'"+" and type = Manager";;
+			String query = "SELECT * from Users inner join Role on Users.person_id = Role.person_id WHERE username='" + username + "' and password='" + password + "'"+" and type = 'Manager'";;
 			PreparedStatement prepStmt=con.prepareStatement(query);
 			ResultSet rs = prepStmt.executeQuery();
 			if( rs.next()){
